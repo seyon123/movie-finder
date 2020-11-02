@@ -52,7 +52,7 @@ const Movies = ({ movies, fetchMoreMovies, hasmore}) => {
                 </InfiniteScroll>
             : <div>No More Movies Found</div>}
             <div className={styles.toTop}>
-                <a href="#"><i className="fas fa-arrow-up"></i></a>
+                <a href="/#"><i className="fas fa-arrow-up"></i></a>
             </div>
         
         </div>
