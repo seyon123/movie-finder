@@ -148,7 +148,7 @@ class App extends React.Component {
                         </Route>
                         <Route exact path="/movie/:id" render={props => <MoviePage id={props.match.params.id} />}>
                         </Route>
-                        <Route><div>Go back</div></Route>
+                        <Route><MoviePage/></Route>
                     </Switch>
                 </Router>
                 <Footer />

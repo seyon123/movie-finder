@@ -73,6 +73,29 @@ main {
     cursor: pointer;
 }
 
+.toTop {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    -webkit-transition: 200ms ease-in-out;
+    transition: 200ms ease-in-out;
+}
+
+.toTop i {
+    padding: 4px 5px;
+    color: var(--white);
+    cursor: pointer;
+    background: var(--gradient);
+    border-radius: 50%;
+    font-size: 2.0em;
+    font-weight: 900;
+    
+}
+
+.toTop:hover {
+   transform: scale(1.3);
+}
+
 @media screen and (max-width: 1733px) {
     main {
         grid-template-columns: repeat(4, 1fr);

@@ -35,6 +35,11 @@
     margin: auto 30px;
 }
 
+.logo a {
+    text-decoration: none;
+    color: var(--logo-bg);
+}
+
 @media screen and (max-width: 768px) {
     .navbar {
         min-width: 50px;

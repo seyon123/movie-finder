@@ -6,7 +6,7 @@ const Footer = () => {
     return (
         <div className={styles.navbar}>
             <h1 className={styles.logo}>
-                Movie Search
+                <a href="/">Movie Search</a>
             </h1>
             <div id="modeToggle" className={styles.modeToggle}><i className="far fa-moon"></i></div>
         </div>

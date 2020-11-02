@@ -42,10 +42,11 @@ class MoviePage extends React.Component {
         const { movie } = this.state;
         return (
             <div className={styles.container}>
+                
                 <div className={styles.back}>
                     <Link style={{textDecoration: 'none'}} to='/'><i className="fas fa-arrow-left"></i></Link> Go Back
                 </div>
-                
+                {Object.keys(movie).length !== 0 && movie.constructor === Object ? 
                 <div className={styles.movieContainer}>
                     <div className={styles.movie}>
                         <span className={cx(getClassByRate(movie.vote_average), styles.span)}><i className="fas fa-star"></i> {movie.vote_average}</span>
@@ -60,6 +61,7 @@ class MoviePage extends React.Component {
                         {movie.imdb_id ? <div><a href={`https://www.imdb.com/title/${movie.imdb_id}`}><img src={imdb} width="70" alt="imdb"/></a></div> : ""}
                     </div>
                 </div>
+                : "This Page does not exist"}
             </div>
         );  
     }
