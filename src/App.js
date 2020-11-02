@@ -1,25 +1,161 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import styles from "./App.module.css";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { Header, Filter, Search, Movies, Footer, MoviePage } from "./components";
+import { getMovies, getGenres } from './api'
+
+
+const DISCOVERSEARCH = "https://api.themoviedb.org/3/discover/movie?api_key=a18a4c3abe6c63b9d003880cedebf790";
+const SEARCHAPI = "https://api.themoviedb.org/3/search/movie?&api_key=a18a4c3abe6c63b9d003880cedebf790&query=";
+
+class App extends React.Component {
+    
+    state = {
+        movies: [],
+        genres: [],
+        genre: "",
+        sort: "popularity.desc",
+        year: "",
+        search: "",
+        page: 1,
+        hasmore: false,
+    }
+    
+    async componentDidMount() {
+        const btnToggle = document.querySelector("#modeToggle i");
+        const theme = localStorage.getItem("theme");
+
+        if (theme === "light") {
+            btnToggle.classList.add("fa-sun");
+            btnToggle.style.padding = "4px 3.8px";
+            btnToggle.classList.remove("fa-moon");
+            document.querySelector("body").classList.add(theme);
+        }
+
+        btnToggle.addEventListener("click", () => {
+            if (btnToggle.classList.contains("fa-moon")) {
+                btnToggle.classList.add("fa-sun");
+                btnToggle.style.padding = "4px 3.8px";
+                btnToggle.classList.remove("fa-moon");
+                localStorage.setItem("theme", "light");
+            } else {
+                btnToggle.classList.add("fa-moon");
+                btnToggle.classList.remove("fa-sun");
+                btnToggle.style.padding = "4px 5px";
+                localStorage.clear();
+            }
+            document.querySelector("body").classList.toggle("light");
+        });
+
+        setTimeout(async () => { 
+            const movies = await getMovies(DISCOVERSEARCH);
+            var hasmore = false;
+            if(movies.length > 0){
+                hasmore = true;
+            }
+            const genres = await getGenres();
+            this.setState({ movies, genres, hasmore });
+        }, 0);
+    }
+
+
+    handleGenreChange = (genre) => {
+        setTimeout(async () => { 
+            const page = 1;
+            this.setState({ page, genre });
+            const movies = await getMovies(DISCOVERSEARCH + "&sort_by=" + this.state.sort + "&with_genres=" + this.state.genre + "&primary_release_year=" + this.state.year + "&page=" + this.state.page);
+            this.setState({ movies });
+        }, 0);
+    }
+
+    handleSortChange = (sort) => {
+        setTimeout(async () => { 
+            const page = 1;
+            this.setState({ page, sort });
+            const movies = await getMovies(DISCOVERSEARCH + "&sort_by=" + this.state.sort + "&with_genres=" + this.state.genre + "&primary_release_year=" + this.state.year + "&page=" + this.state.page);
+            this.setState({ movies });
+        }, 0);
+    }
+
+    handleYearChange = (year) => {
+        setTimeout(async () => { 
+            const page = 1;
+            this.setState({ page, year });
+            const movies = await getMovies(DISCOVERSEARCH + "&sort_by=" + this.state.sort + "&with_genres=" + this.state.genre + "&primary_release_year=" + this.state.year + "&page=" + this.state.page);
+            this.setState({ movies });
+        }, 0);
+    }
+
+    handleSearchChange = (search) => {
+        setTimeout(async () => { 
+            const page = 1;
+            var hasmore = true;
+            const filter = document.querySelector("#filter"); 
+            this.setState({ page, search });
+            var movies;
+            if (this.state.search === "") {
+                filter.style.display = "grid";
+                movies = await getMovies(DISCOVERSEARCH + "&sort_by=" + this.state.sort + "&with_genres=" + this.state.genre + "&primary_release_year=" + this.state.year + "&page=" + this.state.page);
+            }else {
+                filter.style.display = "none";
+                movies = await getMovies(SEARCHAPI + this.state.search  + "&page=" + this.state.page);
+            }
+
+            if(movies.length < 20){
+                hasmore = false
+            }
+            this.setState({ movies, hasmore });
+        }, 0);
+    }
+
+    fetchMoreMovies = () => {
+        setTimeout(async () => {
+            const filter = document.querySelector("#filter"); 
+            this.setState({ page: this.state.page + 1 });
+            var movies;
+            var hasmore = true;
+            if (this.state.search === "") {
+                filter.style.display = "grid";
+                movies = await getMovies(DISCOVERSEARCH + "&sort_by=" + this.state.sort + "&with_genres=" + this.state.genre + "&primary_release_year=" + this.state.year + "&page=" + this.state.page);
+            }else {
+                filter.style.display = "none";
+                movies = await getMovies(SEARCHAPI + this.state.search  + "&page=" + this.state.page);
+            }
+            var totalMovies = [].concat(this.state.movies, movies);
+
+            if(movies.length < 20){
+                hasmore = false
+            }
+            this.setState({ movies: totalMovies, hasmore });
+        }, 3000);
+    }
+
+    render() {
+        const { movies, genres, hasmore } = this.state;
+        return (
+
+            <div className={styles.container}>
+                <Header />
+                <Router>
+                    <Switch>
+                        <Route exact path="/">
+                            <Search handleSearchChange={this.handleSearchChange}/>
+                            <Filter genres={genres} handleGenreChange={this.handleGenreChange} handleSortChange={this.handleSortChange} handleYearChange={this.handleYearChange} />
+                            <div className={styles.content}>
+                                <Movies movies={movies} fetchMoreMovies={this.fetchMoreMovies} hasmore={hasmore}/>
+                            </div>
+                        </Route>
+                        <Route exact path="/movie/:id" render={props => <MoviePage id={props.match.params.id} />}>
+                        </Route>
+                        <Route><div>Go back</div></Route>
+                    </Switch>
+                </Router>
+                <Footer />
+            </div>
+
+        );
+    }
 }
 
 export default App;
