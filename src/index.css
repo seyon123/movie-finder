@@ -24,6 +24,7 @@ body {
     --gradient: linear-gradient(134deg, #836af0 0%, #8e49dc 99%);
     --gradient-light: linear-gradient(99deg, #836af0 0%, #8e49dc 130%);
     --input: #f0f0f0;
+    --filter: brightness(20%);
 }
 
 .light {
@@ -38,6 +39,7 @@ body {
     --shadow: -1px 3px 12px 0px #8b8b8b21;
     --icon-bg: rgba(209, 209, 209, 0.233);
     --input: #eeeeee;
+    --filter: contrast(10%);
 }
 
 #root {

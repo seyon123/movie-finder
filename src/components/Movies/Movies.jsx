@@ -31,6 +31,8 @@ const Movies = ({ movies, fetchMoreMovies, hasmore}) => {
                 <InfiniteScroll
                     loadMore={fetchMoreMovies}
                     hasMore={hasmore}
+                    initialLoad={false}
+                    useWindow={true}
                     loader={<div key={0} className={styles.loading}><ReactLoading type={"spin"} color={"grey"} height={50} width={50}/></div>}
                     >
                     <main id="main">               

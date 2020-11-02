@@ -55,3 +55,15 @@ export const findMovie = async (id) => {
 		return error;
 	}
 };
+
+export const getRecommended = async (id) => {
+	try {
+		const { data: {results} } = await axios.get(
+			`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=a18a4c3abe6c63b9d003880cedebf790&language=en-US&page=1`
+		);
+		console.log(results);
+		return results;
+	} catch (error) {
+		return error;
+	}
+};

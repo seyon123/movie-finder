@@ -4,7 +4,7 @@ import styles from "./Header.module.css";
 
 const Footer = () => {
     return (
-        <div className={styles.navbar}>
+        <div id="navbar" className={styles.navbar}>
             <h1 className={styles.logo}>
                 <a href="/">Movie Search</a>
             </h1>

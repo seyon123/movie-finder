@@ -19,21 +19,21 @@ main {
 .movie {
     overflow: hidden;
     position: relative;
-    border-radius: 15px;
-    background-color: var(--grey);
-    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
 }
 
 .movie img {
     width: 100%;
+    display: table-cell;
     border-radius: 0px;
+    border-radius: 15px;
     object-fit:  cover;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
 }
 
 .movieinfo {
     color: var(--head-light);
+    padding-top: 10px;
     display: grid;
-    padding: 10px;
     grid-template-columns: repeat(1, 1fr);
     align-items: center;
     justify-content: space-between;

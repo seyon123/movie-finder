@@ -51,11 +51,14 @@ class App extends React.Component {
         setTimeout(async () => { 
             const movies = await getMovies(DISCOVERSEARCH);
             var hasmore = false;
+            var genre = "";
+            var sort = "popularity.desc";
+            var year = "";
             if(movies.length > 0){
                 hasmore = true;
             }
             const genres = await getGenres();
-            this.setState({ movies, genres, hasmore });
+            this.setState({ movies, genres, hasmore, genre, sort, year });
         }, 0);
     }
 
@@ -111,11 +114,12 @@ class App extends React.Component {
 
     fetchMoreMovies = () => {
         setTimeout(async () => {
-            const filter = document.querySelector("#filter"); 
+            const filter = document.querySelector("#filter");
+            console.log("running");
             this.setState({ page: this.state.page + 1 });
             var movies;
             var hasmore = true;
-            if (this.state.search === "") {
+            if (this.state.search === "" && filter) {
                 filter.style.display = "grid";
                 movies = await getMovies(DISCOVERSEARCH + "&sort_by=" + this.state.sort + "&with_genres=" + this.state.genre + "&primary_release_year=" + this.state.year + "&page=" + this.state.page);
             }else {
@@ -128,7 +132,7 @@ class App extends React.Component {
                 hasmore = false
             }
             this.setState({ movies: totalMovies, hasmore });
-        }, 3000);
+        }, 1000);
     }
 
     render() {
