@@ -51,10 +51,8 @@ class MoviePage extends React.Component {
 
     render() {
         const { movie, recommended } = this.state;
-        console.log(movie);
         return (
             <div className={styles.container} >
-                {/* <img className={styles.backdrop} src={checkImageExists(movie.backdrop_path)} alt=""/> */}
                 <div className={styles.background} style={{ backgroundImage: "url(" + checkBackdropExists(movie.backdrop_path)+ ")" }}></div>
                 <div className={styles.foreground}>
                     <div className={styles.back}>

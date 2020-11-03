@@ -34,7 +34,6 @@ export const findGenre = async (id) => {
 
 		for (let i = 0; i <= genres.length; i++) {
 			if (id === genres[i].id) {
-				console.log(genres[i].name);
 				return genres[i].name;
 			} else {
 				return "No Genre";
@@ -58,10 +57,9 @@ export const findMovie = async (id) => {
 
 export const getRecommended = async (id) => {
 	try {
-		const { data: {results} } = await axios.get(
+		const { data: { results } } = await axios.get(
 			`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=a18a4c3abe6c63b9d003880cedebf790&language=en-US&page=1`
 		);
-		console.log(results);
 		return results;
 	} catch (error) {
 		return error;
