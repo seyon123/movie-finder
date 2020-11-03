@@ -44,6 +44,7 @@ class MoviePage extends React.Component {
         setTimeout(async () => { 
             const movie = await findMovie(this.props.id);
             const recommended = await getRecommended(this.props.id);
+            document.title = `${movie.title} | Movie Finder`;
             this.setState({ movie, recommended});
         }, 0);
     }
@@ -72,7 +73,7 @@ class MoviePage extends React.Component {
                             <p>{(movie.genres) ? movie.genres.map((genre , i) => ( <span key={i}> {genre.name}{i === movie.genres.length-1 ? "" : ","}</span>  )) : "No Genres Found" }</p>
                             {movie.imdb_id ? <div><a target="_blank" rel="noreferrer" href={`https://www.imdb.com/title/${movie.imdb_id}`}><img src={imdb} width="70" alt="imdb"/></a></div> : ""}
                             {(recommended) ? (recommended.length) ? <h3>Recommended:</h3>:"" : ""}
-                            <p>{(recommended) ? recommended.map((movie , i) => ( <span key={i}> <a href={`/movie/${movie.id}`}>{movie.title}</a>{i === recommended.length-1 ? "" : ","}</span>  )) : "No Genres Found" }</p>
+                            <p>{(recommended) ? recommended.map((movie , i) => ( <span key={i}> <Link to={`/movie/${movie.id}`}>{movie.title}</Link>{i === recommended.length-1 ? "" : ","}</span>  )) : "No Genres Found" }</p>
                         </div>
                     </div>
                     : "This Page does not exist"}

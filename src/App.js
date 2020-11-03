@@ -149,7 +149,7 @@ class App extends React.Component {
                                 <Movies movies={movies} fetchMoreMovies={this.fetchMoreMovies} hasmore={hasmore}/>
                             </div>
                         </Route>
-                        <Route exact path="/movie/:id" render={props => <MoviePage id={props.match.params.id} />}>
+                        <Route exact path="/movie/:id" render={props => <MoviePage key={props.match.params.id} id={props.match.params.id} />}>
                         </Route>
                         <Route><Redirect to="/"/></Route>
                     </Switch>

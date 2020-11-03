@@ -79,6 +79,7 @@ main {
     right: 25px;
     -webkit-transition: 200ms ease-in-out;
     transition: 200ms ease-in-out;
+    z-index: 7;
 }
 
 .toTop i {
