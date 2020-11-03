@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./App.module.css";
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 
 import { Header, Filter, Search, Movies, Footer, MoviePage } from "./components";
 import { getMovies, getGenres } from './api'
@@ -115,7 +115,6 @@ class App extends React.Component {
     fetchMoreMovies = () => {
         setTimeout(async () => {
             const filter = document.querySelector("#filter");
-            console.log("running");
             this.setState({ page: this.state.page + 1 });
             var movies;
             var hasmore = true;
@@ -145,14 +144,14 @@ class App extends React.Component {
                     <Switch>
                         <Route exact path="/">
                             <Search handleSearchChange={this.handleSearchChange}/>
-                            <Filter genres={genres} handleGenreChange={this.handleGenreChange} handleSortChange={this.handleSortChange} handleYearChange={this.handleYearChange} />
+                            <Filter genres={genres} handleGenreChange={this.handleGenreChange} handleSortChange={this.handleSortChange} handleYearChange={this.handleYearChange} getState={this.state}/>
                             <div className={styles.content}>
                                 <Movies movies={movies} fetchMoreMovies={this.fetchMoreMovies} hasmore={hasmore}/>
                             </div>
                         </Route>
                         <Route exact path="/movie/:id" render={props => <MoviePage id={props.match.params.id} />}>
                         </Route>
-                        <Route><MoviePage/></Route>
+                        <Route><Redirect to="/"/></Route>
                     </Switch>
                 </Router>
                 <Footer />

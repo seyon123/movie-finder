@@ -39,7 +39,7 @@ body {
     --shadow: -1px 3px 12px 0px #8b8b8b21;
     --icon-bg: rgba(209, 209, 209, 0.233);
     --input: #eeeeee;
-    --filter: contrast(10%);
+    --filter: contrast(15%);
 }
 
 #root {

@@ -3,13 +3,13 @@ import React from "react";
 import styles from "./Filter.module.css";
 
 
-const Filter = ({genres, handleGenreChange, handleSortChange, handleYearChange}) => {
+const Filter = ({genres, handleGenreChange, handleSortChange, handleYearChange, getState}) => {
     return (
         <div id="filter" className={styles.toolbar}>
             <div>
                 Genres:       
-                <select className={styles.genres} onChange={(e) => handleGenreChange(e.target.value)} >
-                    <option className={styles.genre}>All Genres</option>
+                <select className={styles.genres} value={getState.genre} onChange={(e) => handleGenreChange(e.target.value)} >
+                    <option value="" className={styles.genre}>All Genres</option>
                     {genres ? genres.map((genre , i) => (
                         
                         <option key={i} className={styles.genres} value={genre.id}>{genre.name}</option >
@@ -19,7 +19,7 @@ const Filter = ({genres, handleGenreChange, handleSortChange, handleYearChange})
             </div>
             <div>
                 Sort By:      
-                <select className={styles.sortby} onChange={(e) => handleSortChange(e.target.value)}>
+                <select className={styles.sortby} value={getState.sort} onChange={(e) => handleSortChange(e.target.value)}>
                     <option className={styles.sort} value="popularity.desc">Popularity ▼</option>
                     <option className={styles.sort} value="popularity.asc">Popularity ▲</option>
                     <option className={styles.sort} value="release_date.desc">Release Date ▼</option>
@@ -30,7 +30,7 @@ const Filter = ({genres, handleGenreChange, handleSortChange, handleYearChange})
             </div>
             <div>
                 Year:      
-                <input className={styles.year} name="year" onChange ={(e) => handleYearChange(e.target.value)} type="number" min="1900" max="2099" step="1" placeholder="Year..."/>
+                <input className={styles.year} name="year" value={getState.year} onChange ={(e) => handleYearChange(e.target.value)} type="number" min="1900" max="2099" step="1" placeholder="Year..."/>
             </div>
         </div>
     );    

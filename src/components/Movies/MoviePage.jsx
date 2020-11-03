@@ -72,8 +72,8 @@ class MoviePage extends React.Component {
                             <p className={styles.overview}>{movie.overview}</p>
                             {(movie.genres) ? (movie.genres.length) ? <h3>Genre:</h3>:"" : ""}
                             <p>{(movie.genres) ? movie.genres.map((genre , i) => ( <span key={i}> {genre.name}{i === movie.genres.length-1 ? "" : ","}</span>  )) : "No Genres Found" }</p>
-                            {movie.imdb_id ? <div><a href={`https://www.imdb.com/title/${movie.imdb_id}`}><img src={imdb} width="70" alt="imdb"/></a></div> : ""}
-                            <h3>Recommended:</h3>
+                            {movie.imdb_id ? <div><a target="_blank" rel="noreferrer" href={`https://www.imdb.com/title/${movie.imdb_id}`}><img src={imdb} width="70" alt="imdb"/></a></div> : ""}
+                            {(recommended) ? (recommended.length) ? <h3>Recommended:</h3>:"" : ""}
                             <p>{(recommended) ? recommended.map((movie , i) => ( <span key={i}> <a href={`/movie/${movie.id}`}>{movie.title}</a>{i === recommended.length-1 ? "" : ","}</span>  )) : "No Genres Found" }</p>
                         </div>
                     </div>
