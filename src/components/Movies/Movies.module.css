@@ -1,5 +1,6 @@
 main {
     display: grid;
+    position: relative;
     margin: 40px 0;
     width: 70%;
     justify-content: space-between;
@@ -8,6 +9,7 @@ main {
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 30px;
     grid-auto-rows: minmax(100px, auto);
+    z-index: 7;
 }
 
 .loading {
@@ -19,6 +21,7 @@ main {
 .movie {
     overflow: hidden;
     position: relative;
+    transition: all ease-in-out 100ms;
 }
 
 .movie img {
@@ -71,6 +74,7 @@ main {
 
 .movie:hover  {
     cursor: pointer;
+    transform: scale(1.1);
 }
 
 .toTop {

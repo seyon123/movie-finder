@@ -143,7 +143,7 @@ class App extends React.Component {
                 <Router>
                     <Switch>
                         <Route exact path="/">
-                            <Search handleSearchChange={this.handleSearchChange}/>
+                        <Search handleSearchChange={this.handleSearchChange}/>
                             <Filter genres={genres} handleGenreChange={this.handleGenreChange} handleSortChange={this.handleSortChange} handleYearChange={this.handleYearChange} getState={this.state}/>
                             <div className={styles.content}>
                                 <Movies movies={movies} fetchMoreMovies={this.fetchMoreMovies} hasmore={hasmore}/>

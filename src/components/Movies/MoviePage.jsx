@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./MoviePage.module.css";
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import cx from 'classnames';
 import imdb from './imdb.png';
 import background from './background.jpg'
@@ -44,7 +44,15 @@ class MoviePage extends React.Component {
         setTimeout(async () => { 
             const movie = await findMovie(this.props.id);
             const recommended = await getRecommended(this.props.id);
-            document.title = `${movie.title} | Movie Finder`;
+            document.title = `${movie.title ? movie.title : "Invalid Movie"} | Movie Finder`;
+            window.onfocus = function() {
+                document.title = `${movie.title ? movie.title : "Invalid Movie"} | Movie Finder`;
+            };
+            window.onblur = function() {
+                setTimeout(() => { 
+                    document.title = `👋 Find A Movie | Movie Finder`;
+                }, 30000)
+            };
             this.setState({ movie, recommended});
         }, 0);
     }
@@ -57,7 +65,7 @@ class MoviePage extends React.Component {
                 <div className={styles.background} style={{ backgroundImage: "url(" + checkBackdropExists(movie.backdrop_path)+ ")" }}></div>
                 <div className={styles.foreground}>
                     <div className={styles.back}>
-                        <Link style={{textDecoration: 'none'}} to='/'><i className="fas fa-arrow-left"></i></Link> Go Back
+                        <Link onClick={() => this.props.history.goBack()} style={{textDecoration: 'none'}} to='/'><i className="fas fa-arrow-left"></i></Link> Go Back
                     </div>
                     {Object.keys(movie).length !== 0 && movie.constructor === Object ? 
                     <div className={styles.movieContainer}>
@@ -67,20 +75,33 @@ class MoviePage extends React.Component {
                         </div>
                         <div className={styles.movieContent}>
                             <h1 className={styles.title}>{movie.title}</h1>
-                            <h3>Overview:</h3>
+                            <h4>{movie.release_date ? movie.release_date : ""} {movie.runtime ? `• ${movie.runtime}m` : ""}</h4>
+                            {movie.overview? <h3>Overview:</h3> : ""}
                             <p className={styles.overview}>{movie.overview}</p>
                             {(movie.genres) ? (movie.genres.length) ? <h3>Genre:</h3>:"" : ""}
-                            <p>{(movie.genres) ? movie.genres.map((genre , i) => ( <span key={i}> {genre.name}{i === movie.genres.length-1 ? "" : ","}</span>  )) : "No Genres Found" }</p>
+                            <p>{(movie.genres) ? movie.genres.map((genre , i) => ( <span key={i}> {genre.name}{i === movie.genres.length-1 ? "" : ","}</span>  )) : "" }</p>
                             {movie.imdb_id ? <div><a target="_blank" rel="noreferrer" href={`https://www.imdb.com/title/${movie.imdb_id}`}><img src={imdb} width="70" alt="imdb"/></a></div> : ""}
-                            {(recommended) ? (recommended.length) ? <h3>Recommended:</h3>:"" : ""}
-                            <p>{(recommended) ? recommended.map((movie , i) => ( <span key={i}> <Link to={`/movie/${movie.id}`}>{movie.title}</Link>{i === recommended.length-1 ? "" : ","}</span>  )) : "No Genres Found" }</p>
                         </div>
                     </div>
-                    : "This Page does not exist"}
+                    : "This Movie Does Not Exist 😞"}
+                    <div className={styles.recommendedOuter}>
+                        {(recommended) ? (recommended.length) ? <h3 className={styles.recommendedTitle}>Recommended:</h3>:"" : ""}
+                        <div className={styles.recommendedContainer}>
+                            {(recommended) ? (recommended.length) ? recommended.slice(0, 8).map((movie , i) => ( 
+                            <Link to={`/movie/${movie.id}`} key={i}  style={{ textDecoration: "none" }}>
+								<div alt={movie.title} title={movie.title} className={styles.recommendedMovie} >
+									<img className={styles.poster} src={checkImageExists( movie.poster_path )} alt={movie.title}/>
+									<div className={styles.movieinfo}>
+										<h3>{movie.title}</h3>
+									</div>
+								</div>
+							</Link>)) : "" : ""}
+                        </div>
+                    </div>
                 </div>
             </div>
         );  
     }
 }
 
-export default MoviePage;
+export default withRouter(MoviePage);

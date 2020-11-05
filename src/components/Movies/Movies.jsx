@@ -4,7 +4,6 @@ import InfiniteScroll from "react-infinite-scroller";
 import ReactLoading from "react-loading";
 import { Link } from "react-router-dom";
 import Nullimage from "./no-image.webp";
-
 import styles from "./Movies.module.css";
 
 function getClassByRate(vote) {
@@ -24,9 +23,10 @@ function checkImageExists(image) {
 	return Nullimage;
 }
 
+
 const Movies = ({ movies, fetchMoreMovies, hasmore }) => {
-    document.title = `Movie Finder`;
-    return (
+	document.title = `Movie Finder`;
+	return (
 		<div>
 			{movies && movies.length !== 0 ? (
 				<InfiniteScroll
@@ -36,55 +36,24 @@ const Movies = ({ movies, fetchMoreMovies, hasmore }) => {
 					useWindow={true}
 					loader={
 						<div key={0} className={styles.loading}>
-							<ReactLoading
-								type={"spin"}
-								color={"grey"}
-								height={50}
-								width={50}
-							/>
+							<ReactLoading type={"spin"} color={"grey"} height={50} width={50}/>
 						</div>
 					}
 				>
 					<main id="main">
 						{movies.map((movie, i) => (
-							<Link
-								style={{ textDecoration: "none" }}
-								to={`/movie/${movie.id}`}
-								key={i}
-							>
-								<div
-									alt={movie.title}
-									title={movie.title}
-									className={styles.movie}
-								>
-									<span
-										className={cx(
-											getClassByRate(movie.vote_average),
-											styles.span
-										)}
-									>
+							<Link style={{ textDecoration: "none" }} to={`/movie/${movie.id}`} key={i} >
+								<div alt={movie.title} title={movie.title} className={styles.movie} >
+									<span className={cx( getClassByRate(movie.vote_average), styles.span )} >
 										<i className="fas fa-star"></i>{" "}
 										{movie.vote_average}
 									</span>
-									<img
-										className={styles.poster}
-										src={checkImageExists(
-											movie.poster_path
-										)}
-										alt={movie.title}
-									/>
+									<img className={styles.poster} src={checkImageExists( movie.poster_path )} alt={movie.title} />
 									<div className={styles.movieinfo}>
 										<h3>{movie.title}</h3>
 										<p className={styles.year}>
-											<b>
-												{movie.release_date
-													? movie.release_date.slice(
-															0,
-															movie.release_date.indexOf(
-																"-"
-															)
-													  )
-													: "No Date"}
+											<b> 
+												{movie.release_date ? movie.release_date.slice(0, movie.release_date.indexOf("-")) : "No Date"}
 											</b>
 										</p>
 									</div>
@@ -94,8 +63,8 @@ const Movies = ({ movies, fetchMoreMovies, hasmore }) => {
 					</main>
 				</InfiniteScroll>
 			) : (
-				<div>No More Movies Found</div>
-			)}
+					<div>No More Movies Found</div>
+				)}
 			<div className={styles.toTop}>
 				<a href="/#">
 					<i className="fas fa-arrow-up"></i>
