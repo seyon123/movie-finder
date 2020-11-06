@@ -65,3 +65,14 @@ export const getRecommended = async (id) => {
 		return error;
 	}
 };
+
+export const getCast = async (id) => {
+	try {
+		const { data: { cast } } = await axios.get(
+			`https://api.themoviedb.org/3/movie/${id}/casts?api_key=a18a4c3abe6c63b9d003880cedebf790`
+		);
+		return cast;
+	} catch (error) {
+		return error;
+	}
+};
