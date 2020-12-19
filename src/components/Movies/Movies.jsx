@@ -25,7 +25,7 @@ function checkImageExists(image) {
 
 
 const Movies = ({ movies, fetchMoreMovies, hasmore }) => {
-	document.title = `Movie Finder`;
+	document.title = `Z-Flix`;
 	return (
 		<div>
 			{movies && movies.length !== 0 ? (

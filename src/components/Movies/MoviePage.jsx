@@ -46,13 +46,13 @@ class MoviePage extends React.Component {
             const movie = await findMovie(this.props.id);
             const recommended = await getRecommended(this.props.id);
             const cast = await getCast(this.props.id);
-            document.title = `${movie.title ? movie.title : "Invalid Movie"} | Movie Finder`;
+            document.title = `${movie.title ? movie.title : "Invalid Movie"} | Z-Flix`;
             window.onfocus = function() {
-                document.title = `${movie.title ? movie.title : "Invalid Movie"} | Movie Finder`;
+                document.title = `${movie.title ? movie.title : "Invalid Movie"} | Z-Flix`;
             };
             window.onblur = function() {
                 setTimeout(() => { 
-                    document.title = `👋 Find A Movie | Movie Finder`;
+                    document.title = `👋 You are missing out on great movies`;
                 }, 30000)
             };
             this.setState({ movie, recommended, cast});
